@@ -1,6 +1,7 @@
 from flask import (Flask, render_template)
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import re
 
 # Flask Setup
 app = Flask(__name__)
@@ -21,9 +22,12 @@ def index():
     top5 = Leaderboard.query.order_by(Leaderboard.score.desc()).limit(5).all()
     return render_template("index.html", top5=top5)
 
-@app.route('/api/<name>/<score>', methods=["GET"])
+@app.route('/api/<name>/<int:score>', methods=["GET"])
 def update_leaderboard(name, score):
-    new_score = Leaderboard(name=name, score=score)
+    # Sanitize input: Only allow alphabets, numbers, and underscores in the name
+    sanitized_name = re.sub(r"[^\w]", "", name)
+    
+    new_score = Leaderboard(name=sanitized_name, score=score)
     db.session.add(new_score)
     db.session.commit()
     return "REQUEST SUCCESSFUL"
@@ -39,4 +43,4 @@ def clear_database():
     return "DATABASE CLEARED"
 
 if __name__ == '__main__':
-    app.run(debug=True, port=4444) #debug=True, port=6969
+    app.run(debug=False, port=8000) #debug=True, port=6969
