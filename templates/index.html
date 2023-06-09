@@ -17,7 +17,9 @@
       <div class="col-sm-6">
         <div class="custom-container">
           <h1>Fredclick!</h1>
-          <p>He he he haw!</p>
+          <label for="nameInput">Enter Your Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Your Name">
+          <br>
           <button class="btn btn-primary" id="loadButton">Start Game</button>
           <div class="mt-4">
             <h3>Leaderboard</h3>
@@ -30,32 +32,13 @@
                 </tr>
               </thead>
               <tbody>
+                {% for entry in top5 %}
                 <tr>
-                  <td>1</td>
-                  <td>Player 1</td>
-                  <td>1000</td>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ entry.name }}</td>
+                  <td>{{ entry.score }}</td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Player 2</td>
-                  <td>950</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Player 2</td>
-                  <td>950</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Player 2</td>
-                  <td>950</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Player 2</td>
-                  <td>950</td>
-                </tr>
-                <!-- Add more rows for the leaderboard -->
+                {% endfor %}
               </tbody>
             </table>
           </div>

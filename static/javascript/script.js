@@ -1,4 +1,4 @@
-var timer = 1;
+var timer = 10;
 var points = 0;
 var existingDots = 0;
 var gameAlive = true;
@@ -64,27 +64,24 @@ function timerDown() {
   }
 }
 
-function endGame(x) {
-  for (let i = 0; i < x; i++) {
-    var end = document.createElement("h1");
-    end.className = "end";
-    var x = Math.floor(Math.random() * (window.innerWidth));
-    var y = Math.floor(Math.random() * (window.innerHeight));
-    end.style.left = x + 'px';
-    end.style.top = y + 'px';
-    end.innerHTML = "The game has ended."
-    end.style.zIndex = 100;
-    document.body.appendChild(end);
-  }
-}
-
 function gameOver() {
   document.getElementById("gameOver").style.display = "block";
   document.getElementById('finalScore').textContent = points - existingDots;
+  console.log(document.getElementById('playerName').textContent);
+  $.ajax({
+    type: "GET",
+    url: "/api/" + document.getElementById('playerName').textContent + "/" + (points - existingDots),
+    success: function() {
+      console.log("Data sent successfully.");
+    },
+    error: function() {
+      console.log("Data failed to send.");
+    }
+  });
 }
 
-
 document.getElementById('loadButton').addEventListener('click', function() {
+  var name = document.getElementById('name').value;
   // Delete previous crap
   var homeContainer = document.getElementById("home-container");
   homeContainer.parentNode.removeChild(homeContainer);
@@ -93,6 +90,7 @@ document.getElementById('loadButton').addEventListener('click', function() {
   var bypassIndex = document.createElement('div');
   bypassIndex.className = 'bypassIndex';
   bypassIndex.innerHTML = `
+    <h1 id="playerName">` + name + `</h1>
     <h1>Points: <span id="points"></span></h1>
     <h1>Existing Fredbears: <span id="existingDots"></span></h1>
     <h1>Time: <span id="timer">N/A</span></h1>
