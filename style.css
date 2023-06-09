@@ -1,0 +1,84 @@
+html {
+  margin: 0;
+  height: 100%;
+  padding: 0px;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  padding: 0px;
+  
+  background-image: url("https://img.freepik.com/free-vector/seamless-plaid-background-beige-checkered-pattern-design-vector_53876-157478.jpg?w=2000");
+  color: white;
+  text-align: center;
+}
+
+.custom-container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.end {
+  position: absolute;
+}
+
+.dot {
+	position: absolute;
+	width: 303px;
+  height: 350px;
+  scale: 0.5;
+	background: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/08496144-caf2-4bd4-a145-83d3ae160692/dals0rk-81e03a8e-9af5-4a0f-92cf-b1570aa5f515.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzA4NDk2MTQ0LWNhZjItNGJkNC1hMTQ1LTgzZDNhZTE2MDY5MlwvZGFsczByay04MWUwM2E4ZS05YWY1LTRhMGYtOTJjZi1iMTU3MGFhNWY1MTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.krikfgLd5YZMxdb_kP7MjWlbhqx-rl53jVJGmfojW1U");
+	cursor: pointer;
+	
+	z-index: 1;
+}
+
+
+#flashlight {
+  position: fixed;
+  pointer-events: none;
+  left: -100%;
+  top: -100%;
+  
+  height: 300%;
+  width: 300%;
+  
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 0.93) 12%);
+  filter: blur(4px);
+	
+  z-index: 2;
+
+  transition: 
+    left .5s ease-in-out,
+    top .5s ease-in-out,
+    height .5s ease-in-out,
+    width .5s ease-in-out;
+}
+
+.bypassIndex {
+	position: absolute;
+  padding: 5px;
+	z-index: 3;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+#gameOver {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  border: solid white;
+  background-color: grey;
+  color: white;
+  padding: 150px;
+  text-align: center;
+  z-index: 4;
+}
