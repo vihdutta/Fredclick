@@ -1,4 +1,4 @@
-var timer = 10;
+var timer = 60;
 var points = 0;
 var existingDots = 0;
 var gameAlive = true;
@@ -110,7 +110,55 @@ document.getElementById('loadButton').addEventListener('click', function() {
   document.body.appendChild(flashlight);
 
   // Initialize essential things for game
-  init()
+  init();
+  initBearLoop();
   setInterval(createDot, 500);
   setInterval(timerDown, 1000);
 });
+
+function initBearLoop() {
+  var imageContainer = document.createElement('div');
+  imageContainer.id = 'image-container';
+  imageContainer.style.position = 'absolute';
+
+  var image = document.createElement('img');
+  image.src = 'static/images/bear.png';
+  image.alt = 'Image';
+
+  function resetBear() {
+      var screenWidth = window.innerWidth;
+      var imageWidth = image.clientWidth;
+      var randomPositionX = Math.floor(Math.random() * (screenWidth - imageWidth));
+      imageContainer.style.left = randomPositionX + 'px';
+      imageContainer.style.top = window.innerHeight + 'px';
+  }
+
+  var unclickedBear = true;
+  var bearTravel = 0;
+  var loop = setInterval(function() {
+      if (unclickedBear) {
+          var currentY = parseFloat(imageContainer.style.top) || window.innerHeight;
+          var newY = currentY - 0.35; // Increase Y position by 1 pixel every second
+          bearTravel += 0.35;
+          imageContainer.style.top = newY + 'px';
+          if (bearTravel >= 450) {
+              gameOver();
+              gameAlive = false;
+              clearInterval(loop);
+          }
+      } else {
+          setTimeout(function() {
+              bearTravel = 0;
+              resetBear();
+              unclickedBear = true;
+            }, Math.random() * 5000);
+      }
+    }, 1);
+
+    imageContainer.addEventListener('click', function() {
+      unclickedBear = false;
+    });
+
+  imageContainer.appendChild(image);
+  document.body.appendChild(imageContainer);
+}

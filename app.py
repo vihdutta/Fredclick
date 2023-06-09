@@ -28,6 +28,10 @@ def update_leaderboard(name, score):
     db.session.commit()
     return "REQUEST SUCCESSFUL"
 
+@app.route('/hello', methods=["GET"])
+def hello():
+    return render_template("hello.html")
+
 @app.route('/clear', methods=["GET"])
 def clear_database():
     db.drop_all()
