@@ -9,7 +9,6 @@ body {
   margin: 0;
   height: 100%;
   padding: 0px;
-  
   background-image: url("https://img.freepik.com/free-vector/seamless-plaid-background-beige-checkered-pattern-design-vector_53876-157478.jpg?w=2000");
   color: white;
   text-align: center;
@@ -69,8 +68,21 @@ body {
   padding: 5px;
 	z-index: 3;
   background-color: rgba(0, 0, 0, 0.5);
+  color:white;
   text-align: left;
 }
+
+.bottom-right-fixed {
+  position: fixed;
+  bottom: 1px;
+  right: 1px;
+  color: white;
+  padding: 1px;
+  font-size: 50%;
+  line-height: 1px;
+  z-index: 3;
+}
+
 
 #gameOver {
   position: absolute;

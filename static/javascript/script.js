@@ -90,10 +90,10 @@ document.getElementById('loadButton').addEventListener('click', function() {
   var bypassIndex = document.createElement('div');
   bypassIndex.className = 'bypassIndex';
   bypassIndex.innerHTML = `
-    <h1 id="playerName">` + name + `</h1>
-    <h1>Points: <span id="points"></span></h1>
-    <h1>Existing Fredbears: <span id="existingDots"></span></h1>
-    <h1>Time: <span id="timer">N/A</span></h1>
+    <h2 id="playerName">` + name + `</h2>
+    <h2>Points: <span id="points"></span></h2>
+    <h2>Existing Fredbears: <span id="existingDots"></span></h2>
+    <h2>Time: <span id="timer">N/A</span></h2>
   `;
 
   var container = document.createElement('div');
