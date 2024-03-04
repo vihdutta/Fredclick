@@ -43,4 +43,4 @@ def clear_database():
     return "DATABASE CLEARED"
 
 if __name__ == '__main__':
-    app.run(debug=False, port=8000) #debug=True, port=6969
+    app.run(debug=False, port=6969) #debug=True, port=6969
