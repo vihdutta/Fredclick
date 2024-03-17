@@ -1,15 +1,20 @@
 from flask import (Flask, render_template)
 from pymongo import MongoClient
 from datetime import datetime, timezone
-from creds import MONGO_URI, SECRET_KEY
+from dotenv import load_dotenv
+import os
 import re
+
+# Load environment variables
+if os.path.exists(".env"):
+    load_dotenv()
 
 # Flask Setup
 app = Flask(__name__)
-app.secret_key = SECRET_KEY
+app.secret_key = os.getenv("SECRET")
 
 # MongoDB Atlas Connection
-MONGO_URI = MONGO_URI
+MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
 db = client.get_database("leaderboard_db")
 
