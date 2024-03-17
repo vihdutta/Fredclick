@@ -1,4 +1,4 @@
-var timer = 5;
+var timer = 60;
 var points = 0;
 var existingDots = 0;
 var gameAlive = true;

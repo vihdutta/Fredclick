@@ -2,6 +2,7 @@ from flask import (Flask, render_template)
 from pymongo import MongoClient
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+import json
 import os
 import re
 
@@ -37,7 +38,9 @@ leaderboard = Leaderboard()
 @app.route('/', methods=["GET"])
 def index():
     top5 = leaderboard.get_top5()
-    return render_template("index.html", top5=top5)
+    with open("vm_info.json", "r") as file:
+        vm_info = json.load(file)
+    return render_template("index.html", top5=top5, vm_info=vm_info)
 
 @app.route('/api/<name>/<int:score>', methods=["GET"])
 def update_leaderboard(name, score):

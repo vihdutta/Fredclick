@@ -52,15 +52,27 @@ body {
 
 .bottom-right-fixed {
   position: fixed;
+  text-align: right;
   bottom: 1px;
-  right: 1px;
+  right: 2px;
   color: white;
-  padding: 1px;
+  padding: 2px;
   font-size: 50%;
   line-height: 1px;
   z-index: 3;
 }
 
+.bottom-left-fixed {
+  position: fixed;
+  text-align: left;
+  bottom: 1px;
+  left: 2px;
+  color: white;
+  padding: 2px;
+  font-size: 50%;
+  line-height: 1px;
+  z-index: 3;
+}
 
 #gameOver {
   position: absolute;

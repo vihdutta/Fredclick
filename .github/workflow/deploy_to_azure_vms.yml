@@ -38,5 +38,3 @@ jobs:
         export MONGO_URI="${{ secrets.MONGO_URI }}"
         export SECRET_KEY="${{ secrets.SECRET_KEY }}"
         sudo gunicorn -w $WORKERS -b 0.0.0.0:80 app:app --daemon
-
-        
