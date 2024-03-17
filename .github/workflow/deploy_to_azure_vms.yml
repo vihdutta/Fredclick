@@ -1,0 +1,42 @@
+name: Deploy to Azure VMs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ssh:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: SSH into Azure VM1
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.VM1_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 13.90.101.59 >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+        ssh -i ~/.ssh/id_rsa vihdutta@13.90.101.59
+
+    - name: Deploy on VM1
+      run: |
+        sudo pkill -9 gunicorn
+        sudo rm -r Fredclick
+        git clone https://github.com/vihdutta/Fredclick
+        cd Fredclick
+        sudo apt update
+        sudo apt install nano git python3-pip python3-venv -y
+        python3 -m venv .venv
+        source .venv/bin/activate
+        pip install -r requirements.txt
+        pip install gunicorn
+        WORKERS=$(($(nproc)*2 + 2))
+        export MONGO_URI="${{ secrets.MONGO_URI }}"
+        export SECRET_KEY="${{ secrets.SECRET_KEY }}"
+        sudo gunicorn -w $WORKERS -b 0.0.0.0:80 app:app --daemon
+
+        
