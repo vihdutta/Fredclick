@@ -1,4 +1,4 @@
-var timer = 60;
+var timer = 5;
 var points = 0;
 var existingDots = 0;
 var gameAlive = true;
@@ -11,9 +11,6 @@ function mousemove(event) {
   if (gameAlive) {
     const mouse_x = event.clientX || window.event.clientX;
     const mouse_y = event.clientY || window.event.clientY;
-
-    const fl = document.getElementById('flashlight');
-    fl.style.transform = `translate(calc(${mouse_x}px - 50vw), calc(${mouse_y}px - 50vh))`;
 
     document.getElementById('points').textContent = points;
     document.getElementById('existingDots').textContent = existingDots;
@@ -31,9 +28,6 @@ function createFredbear() {
     dot.style.left = x + 'px';
     dot.style.top = y + 'px';
 
-    const fl = document.getElementById('flashlight');
-    dot.style.zIndex = parseInt(fl.style.zIndex) - 1;
-
     dot.addEventListener('click', () => {
       dot.remove();
       points += 1;
@@ -49,8 +43,6 @@ function getRandomCoordinate(max, offset, min) {
   return Math.floor(Math.random() * (max - offset)) + min;
 }
 
-
-
 function timerDown() {
   if (gameAlive) {
     timer -= 1;
@@ -65,7 +57,7 @@ function timerDown() {
 
 function gameOver() {
   document.getElementById("gameOver").style.display = "block";
-  document.getElementById('finalScore').textContent = points - existingDots;
+  document.getElementById('finalScore').textContent = points; /* - existingDots; */
   console.log(document.getElementById('playerName').textContent);
   $.ajax({
     type: "GET",
@@ -90,17 +82,14 @@ document.getElementById('loadButton').addEventListener('click', function() {
   // Create the elements to load
   var bypassIndex = createBypassIndexElement(name);
   var container = createContainerElement();
-  var flashlight = createFlashlightElement();
 
   // Append the elements to the document
   document.body.appendChild(bypassIndex);
   document.body.appendChild(container);
-  document.body.appendChild(flashlight);
 
   // Initialize essential things for the game
   initMouseListener();
-  initGameLoop();
-  setInterval(createFredbear, 500);
+  setInterval(createFredbear, (1000-Math.pow(points, 6)));
   setInterval(timerDown, 1000);
 });
 
@@ -122,61 +111,4 @@ function createContainerElement() {
   container.className = 'mouse-cursor-gradient-tracking';
   container.innerHTML = '&nbsp;';
   return container;
-}
-
-// Creates div for the flashlight
-function createFlashlightElement() {
-  var flashlight = document.createElement('div');
-  flashlight.id = 'flashlight';
-  return flashlight;
-}
-
-function initGameLoop() {
-  const imageContainer = document.createElement('div');
-  imageContainer.id = 'image-container';
-  imageContainer.style.position = 'absolute';
-
-  const image = document.createElement('img');
-  image.src = 'static/images/bear.png';
-  image.alt = 'Image';
-
-  let gameAlive = true;
-  let bearTravel = 0;
-
-  function resetBear() {
-    const screenWidth = window.innerWidth;
-    const imageWidth = image.clientWidth;
-    const randomPositionX = Math.floor(Math.random() * (screenWidth - imageWidth));
-    imageContainer.style.left = randomPositionX + 'px';
-    imageContainer.style.top = window.innerHeight + 'px';
-  }
-
-  let unclickedBear = true;
-
-  const loop = setInterval(function () {
-    if (unclickedBear && gameAlive) {
-      const currentY = parseFloat(imageContainer.style.top) || window.innerHeight;
-      const newY = currentY - 0.35; // Increase Y position by 0.35 pixels every millisecond
-      bearTravel += 0.35;
-      imageContainer.style.top = newY + 'px';
-      if (bearTravel >= 450) {
-        gameOver();
-        gameAlive = false;
-        clearInterval(loop);
-      }
-    } else {
-      setTimeout(function () {
-        bearTravel = 0;
-        resetBear();
-        unclickedBear = true;
-      }, Math.random() * 5000);
-    }
-  }, 1);
-
-  imageContainer.addEventListener('click', function () {
-    unclickedBear = false;
-  });
-
-  imageContainer.appendChild(image);
-  document.body.appendChild(imageContainer);
 }
