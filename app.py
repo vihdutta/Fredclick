@@ -11,7 +11,7 @@ if os.path.exists(".env"):
 
 # Flask Setup
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET")
+app.secret_key = os.getenv("SECRET_KEY")
 
 # MongoDB Atlas Connection
 MONGO_URI = os.getenv("MONGO_URI")
