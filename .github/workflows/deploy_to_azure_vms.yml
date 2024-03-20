@@ -60,7 +60,7 @@ jobs:
 
       - name: Clone Repository and Setup Environment
         run: |
-          ssh -i ~/.ssh/id_rsa vihdutta@${{ env.REMOTE_IP }} 'cd /home/hcps-duttav && sudo rm -rf Fredclick && sudo git clone https://github.com/vihdutta/Fredclick && cd Fredclick && sudo apt update && sudo apt install nano git python3-pip python3-venv -y && sudo python3 -m venv .venv && sudo chown -R $(whoami) .venv && source .venv/bin/activate && sudo pip install -r requirements.txt && pip install gunicorn && sudo apt install python3 -y'
+          ssh -i ~/.ssh/id_rsa vihdutta@${{ env.REMOTE_IP }} 'cd /home/hcps-duttav && sudo rm -rf Fredclick && sudo git clone https://github.com/vihdutta/Fredclick && cd Fredclick && sudo apt update && sudo apt install nano git python3-pip python3-venv -y && sudo python3 -m venv .venv && sudo chown -R $(whoami) .venv && source .venv/bin/activate && sudo pip install -r requirements.txt && sudo pip install gunicorn && sudo apt install python3 -y'
 
       - name: Create vm_info.json
         run: |
